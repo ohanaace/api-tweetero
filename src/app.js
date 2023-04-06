@@ -27,6 +27,11 @@ res.send("OK")
 })
 
 app.get("/tweets", (req, res) => {
+    if(tweets.length > 10){
+        const diff = tweets.length - 10
+        const recentTweets = tweets.filter((rec) => rec.id > diff)
+        return res.send(recentTweets)
+    }
     res.send(tweets)
 })
 
