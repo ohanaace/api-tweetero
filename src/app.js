@@ -10,9 +10,10 @@ const users = []
 
 app.post("/sign-up", (req, res) => {
     const {username, avatar} = req.body
-    if(!username || !avatar){
+    if(!username || !avatar || typeof(username) !== "string" || typeof(avatar) !== "string"){
         return res.status(400).send("Todos os campos são obrigatórios!")
     }
+
     const user = {id: users.length + 1, username, avatar}
     users.push(user)
     res.status(201).send("OK")
@@ -24,7 +25,7 @@ const loggedUser = users.find((u) => u.username === username)
 if(!loggedUser){
     return res.status(401).send("UNAUTHORIZED")
 }
-if(!tweet){
+if(!tweet || typeof(tweet) !== "string" ){
     return res.status(400).send("Todos os campos são obrigatórios!")
 }
 const newTweet = {id: tweets.length + 1, username, tweet}
