@@ -9,7 +9,6 @@ const tweets = []
 const users = []
 
 app.post("/sign-up", (req, res) => {
-    console.log(req.body)
     const {username, avatar} = req.body
     const user = {id: users.length + 1, username, avatar}
     users.push(user)
@@ -17,7 +16,14 @@ app.post("/sign-up", (req, res) => {
 })
 
 app.post("/tweets", (req, res) => {
-
+const {username, tweet} = req.body
+const loggedUser = users.find((u) => u.username === username)
+if(!loggedUser){
+    return res.status(400).send("UNAUTHORIZED")
+}
+const newTweet = {id: tweets.length + 1, username, tweet}
+tweets.push(newTweet)
+res.send("OK")
 })
 
 app.get("/tweets", (req, res) => {
